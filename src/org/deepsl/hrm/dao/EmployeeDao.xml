@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.deepsl.hrm.dao.EmployeeDao">
+  
+   <select id="selectByPage" parameterType="hashmap" resultMap="employeeMap">
+		 select * from  employee_inf  
+          <include refid="mulitconditionQuery"></include>
+          limit #{pageModel.pageSize}  offset #{pageModel.firstLimitParam}
+   </select>
+   <resultMap type="employee" id="employeeMap">
+       <id column="id" property="id"/>
+       <association property="dept"  javaType="dept"
+           select="org.deepsl.hrm.dao.DeptDao.selectById" column="dept_id">
+           <id column="id" property="id"/>
+       </association>
+        <association property="job"  javaType="job"
+           select="org.deepsl.hrm.dao.JobDao.selectById" column="job_id">
+           <id column="id" property="id"/>
+       </association>
+   </resultMap>
+  <select id="count" parameterType="hashmap" resultType="int">
+		 select count(*) from  employee_inf  
+         <include refid="mulitconditionQuery"></include>
+   </select>
+  <sql id="mulitconditionQuery">
+      <where>
+        <if test=" employee !=null and employee.dept !=null and employee.dept.id!=null and employee.dept.id!=0">
+          and dept_id = #{employee.dept.id}
+         </if>
+         <if test=" employee !=null and employee.job !=null and employee.job.id!=null and employee.job.id!=0 ">
+          and job_id = #{employee.job.id}
+         </if>
+         <if test="employee !=null and employee.name !=null  and !employee.name.trim().isEmpty() ">
+           and name like  #{employee.name}
+        </if>
+         <if test=" employee !=null and employee.cardId !=null  and !employee.cardId.trim().isEmpty() ">
+          and cardId like #{employee.cardId}
+        </if>
+         <if test=" employee !=null and employee.sex !=null  and employee.sex !=0 ">
+          and sex = #{employee.sex}
+        </if>
+         <if test="employee !=null and  employee.phone !=null  and !employee.phone.trim().isEmpty() ">
+          and phone like #{employee.phone}
+        </if>
+         </where>
+    </sql>  
+ 
+   <insert id="save" parameterType="employee">
+      insert into employee_inf 
+      values(null,#{dept.id},#{job.id},#{name},#{cardId},#{address},
+      #{postCode},#{tel},#{phone},#{qqNum},#{email},#{sex},#{party},
+      #{birthday},#{race},#{education},#{speciality},#{hobby},#{remark},null);
+   </insert>
+   
+   <select id="selectById" parameterType="int" resultMap="employeeMap">
+       select * from employee_inf where id = #{id};
+   </select>
+   
+   <update id="update" parameterType="employee">
+       update employee_inf set name=#{name} ,dept_id = #{dept.id},
+         job_id = #{job.id},cardId = #{cardId},address = #{address},
+         postCode = #{postCode},tel = #{tel},phone = #{phone},qqNum = #{qqNum},
+         email = #{email},sex = #{sex},party = #{party}, birthday = #{birthday},
+         race = #{race},education = #{education},speciality = #{speciality},
+         hobby = #{hobby},remark = #{remark}
+         where id = #{id};
+   </update>
+   <delete id="deleteById" parameterType="int" >
+       delete from employee_inf where id = #{id};
+   </delete>
+</mapper>
