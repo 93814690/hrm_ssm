@@ -20,7 +20,7 @@
   <script src="${ctx}/js/ligerUI/js/core/base.js" type="text/javascript"></script>
   <script src="${ctx}/js/ligerUI/js/plugins/ligerDrag.js" type="text/javascript"></script>
   <script src="${ctx}/js/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
-  <script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.jss" type="text/javascript"></script>
+  <script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
   <link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet"/>
   <script type="text/javascript">
       $(function () {
@@ -90,7 +90,7 @@
               <table width="100%" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td class="font3">
-                    职位名称：<input type="text" name="name">
+                    职位名称：<input type="text" name="name" value="${requestScope.search}">
                     <input type="submit" value="搜索"/>
                     <input id="delete" type="button" value="删除"/>
                   </td>
@@ -136,7 +136,7 @@
           pageSize="${requestScope.pageModel.pageSize}"
           recordCount="${requestScope.pageModel.recordCount}"
           style="digg"
-          submitUrl="${ctx}/job/selectJob?pageIndex={0}"/>
+          submitUrl="${ctx}/job/selectJob?flag=1&pageIndex={0}"/>
     </td>
   </tr>
 </table>

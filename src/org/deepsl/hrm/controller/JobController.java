@@ -31,12 +31,19 @@ public class JobController {
     OtherServiceInterface service;
 
     @RequestMapping("/selectJob")
-    public String selectJob(Job job, PageModel model, HttpServletRequest request) {
+    public String selectJob(Job job, Integer flag, PageModel model, HttpServletRequest request) {
 
+        if (flag == null) {
+            request.getSession().setAttribute("search", job.getName());
+        } else {
+            String search = (String) request.getSession().getAttribute("search");
+            job.setName(search);
+        }
+        String search = job.getName();
+        request.setAttribute("search", search);
         List<Job> jobs = service.findJob(job, model);
         request.setAttribute("jobs", jobs);
         request.setAttribute("pageModel", model);
-
 
         return "job/job";
     }
