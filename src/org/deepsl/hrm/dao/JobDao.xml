@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.deepsl.hrm.dao.JobDao">
+
+    <sql id="search">
+        <where>
+            <if test="job != null and job.name != null and !job.name.trim().isEmpty()">
+                name like #{job.name}
+            </if>
+        </where>
+    </sql>
+
+    <insert id="save" parameterType="job">
+        insert into job_inf (name, remark) values (#{name}, #{remark});
+    </insert>
+
+    <update id="update" parameterType="job">
+        update job_inf
+        set name = #{name}, remark = #{remark}
+        where id = #{id};
+    </update>
+    
+    <delete id="deleteById" parameterType="int">
+        delete  from job_inf where id = #{id};
+    </delete>
+
+    <select id="selectById" parameterType="int" resultType="job">
+        SELECT * FROM job_inf WHERE id = #{id};
+    </select>
+    <select id="selectAllJob" resultType="job">
+        SELECT * FROM job_inf ;
+    </select>
+    <select id="count" resultType="int" parameterType="map">
+        SELECT count(*) FROM job_inf
+        <include refid="search"/>
+    </select>
+    <select id="selectByPage" parameterType="map" resultType="job">
+        SELECT * FROM job_inf
+        <include refid="search"/>
+        LIMIT #{model.pageSize} OFFSET  #{model.firstLimitParam};
+    </select>
+
+
+</mapper>
