@@ -105,8 +105,10 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	公告名称：<input type="text" name="title">
-					    	公告内容：<input type="text" name="content">
+					    	公告名称：<input type="text" name="title"
+										value="${requestScope.title}">
+					    	公告内容：<input type="text" name="content"
+										value="${requestScope.content}">
 					    	 <input type="submit" value="搜索"/>
 					    	<input id="delete" type="button" value="删除"/>
 					    </td>
@@ -161,7 +163,7 @@
 	  	        pageSize="${requestScope.pageModel.pageSize}" 
 	  	        recordCount="${requestScope.pageModel.recordCount}" 
 	  	        style="digg"
-	  	        submitUrl="${ctx}/notice/selectNotice?pageIndex={0}"/>
+	  	        submitUrl="${ctx}/notice/selectNotice?pageIndex={0}&title=${requestScope.title}&content=${requestScope.content}"/>
 	  </td></tr>
 	</table>
 	<div style="height:10px;"></div>

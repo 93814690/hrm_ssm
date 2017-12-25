@@ -8,8 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 处理用户请求控制器
@@ -34,7 +37,7 @@ public class UserController {
      * @param model     model
      */
     @RequestMapping("selectUser")
-    public String selectUser(Integer pageIndex, User user, Model model) {
+    public String selectUser(Integer pageIndex, User user, Model model, HttpServletRequest request) {
 
         pageIndex = (pageIndex == null) ? 1 : pageIndex;
         PageModel pageModel = new PageModel();
@@ -42,6 +45,9 @@ public class UserController {
         List<User> users = userService.findUser(user, pageModel);
         model.addAttribute("users", users);
         model.addAttribute("pageModel",pageModel);
+        model.addAttribute("username",user.getUsername());
+        model.addAttribute("status",user.getStatus());
+
         return "user/user";
     }
 

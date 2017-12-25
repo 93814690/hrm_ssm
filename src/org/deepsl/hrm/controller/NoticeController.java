@@ -11,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @version V1.0
@@ -39,6 +41,8 @@ public class NoticeController {
         List<Notice> notices = noticeService.listNoticeByPage(pageModel, title, content);
         model.addAttribute("notices", notices);
         model.addAttribute("pageModel",pageModel);
+        model.addAttribute("title",title);
+        model.addAttribute("content",content);
         return "notice/notice";
     }
 
