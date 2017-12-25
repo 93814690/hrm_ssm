@@ -25,7 +25,7 @@ public class DeptServiceImpl implements DeptService {
 		int count = deptDao.count(params).intValue();
 		pageModel.setRecordCount(count);
 		params.put("limit", pageModel.getPageSize());
-		params.put("offset", count==1? 0 : pageModel.getFirstLimitParam());
+		params.put("offset", count == 0 ? 0 : pageModel.getFirstLimitParam());
 		List<Dept> depts = deptDao.selectByPage(params);
 		return depts;
 	}

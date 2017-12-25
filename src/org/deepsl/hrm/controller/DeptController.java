@@ -31,12 +31,11 @@ public class DeptController {
 	public String selectDept(Model model,PageModel pageModel,Dept dept){
 		List<Dept> depts = deptService.findDept(dept, pageModel);
 		model.addAttribute("depts",depts);
-//		model.addAttribute("pageModel", pageModel);
 		return "dept/dept";
 	}
 	
 	@RequestMapping("addDept")
-	public void addDept(Dept dept, int flag, HttpServletRequest request,HttpServletResponse response) {
+	public void addDept(Dept dept, Integer flag, HttpServletRequest request,HttpServletResponse response) {
 		try {
 			if (flag == 1) {
 				request.getRequestDispatcher("/WEB-INF/jsp/dept/showAddDept.jsp").forward(request,response);
@@ -76,7 +75,7 @@ public class DeptController {
 	
 	
 	@RequestMapping("removeDept")
-	public void removeDept(Integer[] ids,HttpServletRequest request,HttpServletResponse response){
+	public void removeDept(Integer[] ids,HttpServletResponse response){
 		for (Integer id : ids) {
 			deptService.removeDeptById(id);
 		}
