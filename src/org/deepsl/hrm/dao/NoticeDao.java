@@ -18,14 +18,14 @@ public interface NoticeDao {
 
 	// 动态查询
 	 
-	List<Notice> selectByPage(Map<String, Object> params);
+	List<Notice> listByPage(Map<String, Object> params);
 	
  	Integer count(Map<String, Object> params);
 		
- 	Notice selectById(int id);
+ 	Notice getById(int id);
 	
 	// 根据id删除公告
- 	void deleteById(Integer id);
+ 	void deleteByIds(int[] ids);
 		
 	// 动态插入公告
  	void save(Notice notice);

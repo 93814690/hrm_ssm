@@ -145,7 +145,8 @@
 					 <td align="center" width="40px;"><a href="${ctx }/notice/updateNotice?flag=1&id=${notice.id}">
 							<img title="修改" src="${ctx }/images/update.gif"/></a>
 					  </td>
-					  <td align="center"  width="40px;"><a href="#" id="prev_${notice.id }">
+					  <td align="center"  width="40px;"><a href="${ctx }/notice/previewNotice?id=${notice.id}"
+														   id="prev_${notice.id }">
 							<img title="预览" src="${ctx }/images/prev.gif"/></a>
 					  </td>
 				</tr>
@@ -160,7 +161,7 @@
 	  	        pageSize="${requestScope.pageModel.pageSize}" 
 	  	        recordCount="${requestScope.pageModel.recordCount}" 
 	  	        style="digg"
-	  	        submitUrl="${ctx}/employee/selectEmployee?pageIndex={0}"/>
+	  	        submitUrl="${ctx}/notice/selectNotice?pageIndex={0}"/>
 	  </td></tr>
 	</table>
 	<div style="height:10px;"></div>

@@ -1,12 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.deepsl.hrm.dao.UserDao">
-  
-   <select id="selectByLoginnameAndPassword" parameterType="hashmap"  resultType="org.deepsl.hrm.domain.User" >
-		 select * from  user_inf  where loginname = #{loginname} and password = #{password} 
-   </select>
+
+    <select id="getByLoginnameAndPassword" parameterType="hashmap" resultType="user">
+        SELECT *
+        FROM user_inf
+        WHERE loginname = #{loginname} AND password = #{password}
+    </select>
+
+    <select id="getById" parameterType="int" resultType="user">
+        SELECT *
+        FROM user_inf
+        WHERE id = #{id};
+    </select>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM user_inf
+        WHERE id = #{id};
+    </delete>
+
+    <delete id="deleteByIds" parameterType="int">
+        DELETE FROM user_inf WHERE
+        <foreach collection="array" item="id" open="id in (" close=")" separator=",">
+            #{id}
+        </foreach>;
+    </delete>
+
+    <update id="update" parameterType="user">
+        UPDATE user_inf
+        SET username        = #{username}, loginname = #{loginname}, password =
+        #{password}, status = #{status}
+        WHERE id = #{id};
+    </update>
+
+    <insert id="save" parameterType="user">
+
+        INSERT INTO user_inf VALUES (NULL, #{username}, #{loginname}, #{password}, #{status},
+                                     #{createDate});
+    </insert>
+
+    <select id="listByPage" parameterType="hashMap" resultType="user">
+        SELECT * from user_inf
+        <where>
+            <if test="username != null">
+                and username like #{username}
+            </if>
+            <if test="status != null">
+                and `status` = #{status}
+            </if>
+        </where>
+        limit #{offset}, #{limit};
+    </select>
+
+    <select id="count" parameterType="hashMap" resultType="int">
+        select count(*) from user_inf
+        <where>
+            <if test="username != null">
+                and username like #{username}
+            </if>
+            <if test="status != null">
+                and `status` = #{status}
+            </if>
+        </where>
+    </select>
 
 
 </mapper>
