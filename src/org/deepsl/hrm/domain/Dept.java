@@ -1,6 +1,7 @@
 package org.deepsl.hrm.domain;
 
 
+@SuppressWarnings("serial")
 public class Dept implements java.io.Serializable{
 
 	private Integer id;		// id
