@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.deepsl.hrm.dao.NoticeDao">
+
+    <resultMap id="noticeWithUser" type="notice">
+        <id column="id" property="id"/>
+        <association column="uid" property="user" javaType="user"
+                     select="org.deepsl.hrm.dao.UserDao.getById">
+            <id property="id" column="id"/>
+        </association>
+    </resultMap>
+
+    <select id="listByPage" parameterType="hashMap" resultMap="noticeWithUser">
+        select * from notice_inf
+        <where>
+            <if test="title != null">
+                and title like #{title}
+            </if>
+            <if test="content != null">
+                and content like #{content}
+            </if>
+        </where>
+        limit #{offset}, #{limit};
+    </select>
+
+    <select id="count" parameterType="hashMap" resultType="int">
+        select count(*) from notice_inf
+        <where>
+            <if test="title != null">
+                and title like #{title}
+            </if>
+            <if test="content != null">
+                and content like #{content}
+            </if>
+        </where>
+    </select>
+
+    <select id="getById" parameterType="int" resultType="notice">
+        SELECT *
+        FROM notice_inf
+        WHERE id = #{id};
+    </select>
+
+    <delete id="deleteByIds" parameterType="int[]">
+        delete from notice_inf
+        <where>
+            id
+            <foreach collection="array" item="id" open="in (" close=")" separator=",">
+                #{id}
+            </foreach>;
+        </where>
+    </delete>
+
+    <insert id="save" parameterType="notice">
+        INSERT INTO notice_inf VALUES (NULL, #{title}, #{content}, #{createDate}, #{uid});
+    </insert>
+
+    <update id="update" parameterType="notice">
+        UPDATE notice_inf
+        SET title = #{title}, content = #{content}
+        WHERE id = #{id};
+    </update>
+</mapper>

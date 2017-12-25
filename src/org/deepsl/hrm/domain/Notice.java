@@ -7,6 +7,7 @@ public class Notice implements java.io.Serializable{
 	private String title;   // 标题
 	private String content; // 内容
 	private java.util.Date createDate;  // 发布日期
+	private Integer uid;
 	private User user;		// 发布人
 	// 无参数构造器
 	public Notice() {
@@ -38,6 +39,15 @@ public class Notice implements java.io.Serializable{
 	public java.util.Date getCreateDate(){
 		return this.createDate;
 	}
+
+	public Integer getUid() {
+		return uid;
+	}
+
+	public void setUid(Integer uid) {
+		this.uid = uid;
+	}
+
 	public User getUser() {
 		return user;
 	}
