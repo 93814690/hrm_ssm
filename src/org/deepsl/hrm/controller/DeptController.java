@@ -1,11 +1,6 @@
 package org.deepsl.hrm.controller;
 
-import java.io.IOException;
 import java.util.List;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.deepsl.hrm.domain.Dept;
 import org.deepsl.hrm.service.DeptService;
@@ -35,57 +30,32 @@ public class DeptController {
 	}
 	
 	@RequestMapping("addDept")
-	public void addDept(Dept dept, Integer flag, HttpServletRequest request,HttpServletResponse response) {
-		try {
-			if (flag == 1) {
-				request.getRequestDispatcher("/WEB-INF/jsp/dept/showAddDept.jsp").forward(request,response);
-				return;
-			}
-			deptService.addDept(dept);
-			response.sendRedirect("/hrm_ssm/dept/selectDept");
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public String addDept(Dept dept, Integer flag) {
+		if (flag == 1) {
+			return "forward:/WEB-INF/jsp/dept/showAddDept.jsp";
 		}
-
+		deptService.addDept(dept);
+		return "redirect:/dept/selectDept";
 	}
 	
 	@RequestMapping("updateDept")
-	public void updateDept(Dept dept,Integer flag,HttpServletRequest request,HttpServletResponse response){
-		try {
-			if (flag == 1) {
-				dept = deptService.findDeptById(dept.getId());
-				request.setAttribute("dept", dept);
-				request.getRequestDispatcher("/WEB-INF/jsp/dept/showUpdateDept.jsp").forward(request,response);
-				return;
-			}
-			deptService.modifyDept(dept);
-			response.sendRedirect("/hrm_ssm/dept/selectDept");
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public String updateDept(Integer flag, Dept dept, Model model) {
+		if (flag == 1) {
+			dept = deptService.findDeptById(dept.getId());
+			model.addAttribute("dept", dept);
+			return "forward:/WEB-INF/jsp/dept/showUpdateDept.jsp";
 		}
+		deptService.modifyDept(dept);
+		return "redirect:/dept/selectDept";
 	}
 	
 	
 	@RequestMapping("removeDept")
-	public void removeDept(Integer[] ids,HttpServletResponse response){
+	public String removeDept(Integer[] ids){
 		for (Integer id : ids) {
 			deptService.removeDeptById(id);
 		}
-		try {
-			response.sendRedirect("/hrm_ssm/dept/selectDept");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		return "forward:selectDept";		
 	}
 	
 }
