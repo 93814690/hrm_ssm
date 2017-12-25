@@ -88,7 +88,7 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	部门名称：<input type="text" name="name">
+					    	部门名称：<input type="text" name="name" value="${dept.name}">
 					    	 <input type="submit" value="搜索"/>
 					    	<input id="delete" type="button" value="删除"/>
 					    </td>
